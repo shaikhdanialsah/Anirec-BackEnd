@@ -97,10 +97,6 @@ To deploy the backend to Koyeb, follow these steps:
 1. Set up the app on Koyeb and connect to your `PostgreSQL database`.
 2. Push the app to Koyeb using Git or other deployment methods.
 3. Make sure the environment variables (like `DATABASE_NAME, DATABASE_HOST, DATABASE_PASSWORD, DATABASE_USER`) are properly configured.
-
-## License
-This project is licensed under the MIT License - see the [MIT](https://choosealicense.com/licenses/mit/) file for details.
-
 4. Add a Procfile file so Koyeb knows how to start your application.
 ```bash
 gunicorn module_name:application_instance_name
