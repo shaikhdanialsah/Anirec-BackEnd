@@ -77,16 +77,19 @@ def recommend_anime():
     # Combine similarities with weights
     combined_similarities = (0.3 * desc_similarities) + (0.4 * title_similarities) + (0.3 * genre_similarities)
 
-    # Add combined similarity scores to anime data
+    # Add combined and individual similarity scores to anime data
     for idx, anime in enumerate(anime_data):
-        anime['similarity'] = float(combined_similarities[idx])  # Convert to float for JSON serialization
+        anime['similarity'] = float(combined_similarities[idx])  # Combined similarity
+        anime['title_similarity'] = float(title_similarities[idx])
+        anime['genre_similarity'] = float(genre_similarities[idx])
+        anime['description_similarity'] = float(desc_similarities[idx])
 
     # Filter and sort recommendations
     recommended_animes = sorted(
         [
             anime for idx, anime in enumerate(anime_data)
             if idx != anime_index and  # Exclude the input anime itself
-               anime.get('genres', '').split(',')[0].strip().lower() == input_anime.get('genres', '').split(',')[0].strip().lower() 
+               anime.get('genres', '').split(',')[0].strip().lower() == input_anime.get('genres', '').split(',')[0].strip().lower()
         ],
         key=lambda x: x['similarity'], reverse=True
     )[:20]  # Top 20 recommendations
