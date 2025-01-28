@@ -16,7 +16,7 @@ def get_reviews(anime_id):
 
         # Fetch reviews for the specified anime ID
         cur.execute('''
-            SELECT "review".id, "review".anime_id, "review".user_id, "users".name, "review".comment, "review".created_at, "users".profile_picture
+            SELECT "review".id, "review".anime_id, "review".user_id, "users".name, "review".comment, "review".created_at, "users".profile_picture, "users".wallpaper, "users".favourites_count, "users".reviews_count
             FROM "review"
             JOIN "users" ON "review".user_id = "users".id
             WHERE "review".anime_id = %s
@@ -33,7 +33,10 @@ def get_reviews(anime_id):
                 "name": review[3],
                 "comment": review[4],
                 "created_at": review[5],
-                "profile_picture": review[6]
+                "profile_picture": review[6],
+                "wallpaper": review[7],
+                "favourites_count":review[8],
+                "reviews_count":review[9]
             }
             for review in reviews
         ]
@@ -131,7 +134,7 @@ def get_user_reviews(user_id):
     except Exception as e:
         print(e)
         return jsonify({"error": "Failed to fetch reviews"}), 500
-
+    
 # Delete a review by review_id
 @reviews_bp.route('/api/delete-review', methods=['DELETE'])
 def delete_review():
